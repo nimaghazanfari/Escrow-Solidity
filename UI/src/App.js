@@ -1,7 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import ContractHelper from './components/ContractHelper';
 
-function App() {
+const App = () => {
+
+
+  useEffect(() => {
+    const initContract = async () => {
+      const contracts = await ContractHelper();
+      console.log(contracts.Accounts)
+      const instance = await contracts.Contracts.Escrow.deployed();
+      const owner = await instance.owner()
+      console.log(owner)
+    }
+
+    initContract();
+  })
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -20,6 +37,7 @@ function App() {
       </header>
     </div>
   );
+
 }
 
 export default App;
