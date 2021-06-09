@@ -14,11 +14,11 @@ contract Escrow is Ownable {
     uint256 public percent;
     uint256 public totalPrice;
 
-    constructor(
+    function initEscrow(
         address _seller,
         uint256 _totalPrice,
         uint256 _percent
-    ) {
+    ) external onlyOwner {
         require(_percent < 100, "!all");
 
         seller = _seller;

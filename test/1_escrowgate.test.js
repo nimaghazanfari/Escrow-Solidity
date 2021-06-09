@@ -1,4 +1,4 @@
-const EscrowGate = artifacts.require("EscrowGate");
+const Escrow = artifacts.require("Escrow");
 const chaiModule = require('chai');
 const { chaiEthers } = require('chai-ethers');
 const truffleAssert = require('truffle-assertions');
@@ -6,7 +6,7 @@ const truffleAssert = require('truffle-assertions');
 chaiModule.use(chaiEthers);
 const { expect } = chaiModule;
 
-contract('EscrowGate', async (accounts) => {
+contract('Escrow', async (accounts) => {
 
     let instance;
     let agent;
@@ -15,13 +15,15 @@ contract('EscrowGate', async (accounts) => {
 
     before(async () => {
         [agent, alice, bob] = accounts;
-        instance = await EscrowGate.deployed();
+        instance = await Escrow.deployed();
     });
 
     describe('Init Phase', () => {
 
         it('should init escrow', async () => {
-            
+
+            await instance.initEscrow(alice, 50000, 5);
+
         })
 
     })
