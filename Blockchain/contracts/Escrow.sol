@@ -90,7 +90,11 @@ contract Escrow is Ownable, AccessControl {
         //subtract the agent's fee, and send the rest to the seller
         uint256 amount = item.totalPrice.sub(agentFee);
         require(amount > 0, "!fee");
-        
+
         payable(item.seller).sendValue(amount);
+    }
+
+    function totalEscrows() external view returns (uint256 count) {
+        count = escrows.length;
     }
 }

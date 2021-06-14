@@ -22,6 +22,6 @@ httpServer.listen(port, () => {
 //express endpoints
 app.get('/Escrow', (req, res) => {
     res.header("Content-Type",'application/json');
-    var data = path.resolve('../build/contracts/Escrow.json');
+    var data = path.resolve('../Blockchain/build/contracts/Escrow.json');
     res.sendFile(data);
 });

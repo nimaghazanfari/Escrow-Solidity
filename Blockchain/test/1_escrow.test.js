@@ -24,7 +24,7 @@ contract('Escrow', async (accounts) => {
         it('should init escrow', async () => {
 
             //initiate new item to be sold
-            await instance.initNewEscrowItem(alice, web3.utils.toWei('1', 'ether'), 5);            
+            await instance.initNewEscrowItem(alice, web3.utils.toWei('100', 'finney'), 5);            
             const exists = await instance.contains(0);
             expect(exists).to.be.true;
 
@@ -50,7 +50,7 @@ contract('Escrow', async (accounts) => {
 
         it('should buy an item', async () => {
 
-            const paymentAmount = web3.utils.toWei('1', 'ether');
+            const paymentAmount = web3.utils.toWei('100', 'finney');
 
             //buy item[0]
             await instance.buyItem(0, { from: bob, value: paymentAmount });
@@ -114,8 +114,7 @@ contract('Escrow', async (accounts) => {
             await instance.withdraw(0, { from: alice });
             const balanceAfter = await web3.eth.getBalance(alice);
 
-            const BN = web3.utils.BN;
-            expect(new BN(balanceAfter) > new BN(balanceBefore)).to.be.true;
+            expect(balanceAfter).not.to.equal(balanceBefore);
         });
 
         it('should revert for WITHDRAWN items', async () => {

@@ -1,40 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
 import React, { useEffect, useState } from 'react';
 import ContractHelper from './components/ContractHelper';
+import AvailAccounts from './components/AvailAccounts';
 
+
+const initContract = async () => {
+
+  const instance = await (await ContractHelper.init()).Escrow.deployed();
+  
+  console.log(instance.address)
+
+}
+
+initContract();
+	
 const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [escrows, setEscrows] = useState([]);
 
-
-  useEffect(() => {
-    const initContract = async () => {
-      const contracts = await ContractHelper();
-      console.log(contracts.Accounts)
-      const instance = await contracts.Contracts.Escrow.deployed();
-      const owner = await instance.owner()
-      console.log(owner)
-    }
-
-    initContract();
-  })
-
+  const availAccountSelected = account => {
+    console.log(account);
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+
+      <div className="row m-5">
+        <AvailAccounts accountSelected={availAccountSelected} />
+      </div>
+
     </div>
   );
 

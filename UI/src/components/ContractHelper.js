@@ -22,6 +22,8 @@ const InitWeb3 = async () => {
     // If no injected web3 instance is detected, fall back to Ganache
     else {
         MainProvider.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+        // const infuraKey = '02cb9843581843b8a37754ba464b1a2f';
+        // MainProvider.web3Provider = new Web3.providers.HttpProvider(`https://ropsten.infura.io/v3/${infuraKey}`);
     }
 
     window.web3 = new Web3(MainProvider.web3Provider);
@@ -39,17 +41,17 @@ const GetContract = async (MainProvider, name) => {
     return contract;
 }
 
-const ContractHelper = async () => {
+const ContractHelper = {
+    init: async () => {
 
-    let MainProvider = await InitWeb3();
+        let MainProvider = await InitWeb3();
 
-    return {
-
-        Accounts: await window.web3.eth.getAccounts(),   
-        Contracts: {
+        return {
             Escrow: await GetContract(MainProvider, 'Escrow')
         }
-        
+    },
+    getAccounts: async () => {
+        return await window.web3.eth.getAccounts();
     }
 }
 
